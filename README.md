@@ -1,1 +1,1 @@
-thIS IS A README
+This is a capybara test
