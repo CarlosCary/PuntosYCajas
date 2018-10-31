@@ -1,5 +1,5 @@
 require 'sinatra'
-class Test < Sinatra::Base
+class App < Sinatra::Base
 get '/' do
     erb:bienvenida
 end
