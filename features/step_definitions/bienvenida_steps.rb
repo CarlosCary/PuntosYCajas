@@ -1,4 +1,4 @@
-Given("visito la pagina principal") do
+  Given("visito la pagina principal") do
     visit('/')
   end
   
