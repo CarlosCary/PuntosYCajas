@@ -1,8 +1,6 @@
-# Sinatra
 ENV['RACK_ENV']='app'
 
 require File.join(File.dirname(__FILE__), '..', '..', 'app.rb')
-# Force the application name because polyglot breaks the auto-detection logic.
 
 require 'capybara'
 require 'capybara/cucumber'
