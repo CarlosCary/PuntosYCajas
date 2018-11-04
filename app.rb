@@ -4,8 +4,8 @@ class App < Sinatra::Base
         erb:bienvenida
     end
 
-    post '/sumar' do
-        "Sumar"
+    post '/jugar' do
+        "Jugar"
     end
     
     run! if app_file == $0;
