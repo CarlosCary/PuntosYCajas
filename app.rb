@@ -1,11 +1,12 @@
 require 'sinatra'
 class App < Sinatra::Base
-    get '/' do
-        erb:bienvenida
+
+    get '/' do 
+        erb:partida
     end
 
-    post '/jugar' do
-        "Jugar"
+    get '/partida' do
+        erb:partida
     end
     
     run! if app_file == $0;
