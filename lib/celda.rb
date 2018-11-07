@@ -7,6 +7,7 @@ class Celda
         @abajo=false
         @derecha=false
         @izquierda=false
+        
     end
 
     def estaVacia()
@@ -24,7 +25,7 @@ class Celda
         when "izquierda"
             @izquierda=true
         end
-        @vacia=false
+        @vacia=false 
     end
 
     def tieneLinea(posicion)

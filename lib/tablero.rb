@@ -6,6 +6,16 @@ class Tablero
         @filas= Array.new(4) { Array.new(4, 0) }
     end
 
+    def inicializarColumnasFilas()
+        for i in 0..4
+            for j in 0..4
+                @columnas[i][j]=false
+                @filas[i][j]=false
+            end
+        end
+
+    end
+
     def arregloFilasEstaVacio()
         return @arregloFilas
     end
@@ -17,11 +27,17 @@ class Tablero
     def insertarFila(posX, posY)
         @filas[posX][posY]=true
         @arregloFilas=false
+        puntaje=verificarSiSeFormaUnaCajaAbajoConFila(posX,posY)
+        puntaje+=verificarSiSeFormaUnaCajaArribaConFila(posX,posY)
+        return puntaje
     end
 
     def insertarColumna(posX, posY)
         @columnas[posX][posY]=true
         @arregloColumnas=false
+        puntaje=verificarSiSeFormaUnaCajaDerechaConColumna(posX,posY)
+        puntaje+=verificarSiSeFormaUnaCajaIzquierdaConColumna(posX,posY)
+        return puntaje
     end
 
     def comprobarSiExisteColumnaDibujadaEnPos(posX,posY)
