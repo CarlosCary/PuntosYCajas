@@ -1,4 +1,5 @@
 class Tablero
+
     def initialize()
         @arregloFilas=true
         @arregloColumnas=true
@@ -9,11 +10,17 @@ class Tablero
     def inicializarColumnasFilas()
         for i in 0..4
             for j in 0..4
-                @columnas[i][j]=false
-                @filas[i][j]=false
+                @columnas[i][j] = false
+                @filas[i][j] = false
             end
         end
+    end
 
+    def convertirCoordenadasAFilasOColumnas(coordX,coodY,coordX2,coordY2)
+        if(coordX == coordX2)
+        end
+        if(coordY == coordY2)
+        end
     end
 
     def arregloFilasEstaVacio()
@@ -25,18 +32,18 @@ class Tablero
     end
 
     def insertarFila(posX, posY)
-        @filas[posX][posY]=true
-        @arregloFilas=false
-        puntaje=verificarSiSeFormaUnaCajaAbajoConFila(posX,posY)
-        puntaje+=verificarSiSeFormaUnaCajaArribaConFila(posX,posY)
+        @filas[posX][posY] = true
+        @arregloFilas = false
+        puntaje = verificarSiSeFormaUnaCajaAbajoConFila(posX,posY)
+        puntaje += verificarSiSeFormaUnaCajaArribaConFila(posX,posY)
         return puntaje
     end
 
     def insertarColumna(posX, posY)
-        @columnas[posX][posY]=true
-        @arregloColumnas=false
-        puntaje=verificarSiSeFormaUnaCajaDerechaConColumna(posX,posY)
-        puntaje+=verificarSiSeFormaUnaCajaIzquierdaConColumna(posX,posY)
+        @columnas[posX][posY] = true
+        @arregloColumnas = false
+        puntaje = verificarSiSeFormaUnaCajaDerechaConColumna(posX,posY)
+        puntaje += verificarSiSeFormaUnaCajaIzquierdaConColumna(posX,posY)
         return puntaje
     end
 
@@ -45,12 +52,12 @@ class Tablero
     end
 
     def verificarSiSeFormaUnaCajaAbajoConFila(posX,posY)
-        puntaje=0
-        if(posX<3)
-            if(@filas[posX][posY+1]==true)
-                if(@columnas[posX][posY]==true)
-                    if(@columnas[posX+1][posY+1]==true)
-                        puntaje+=1
+        puntaje = 0
+        if(posX < 3)
+            if(@filas[posX][posY+1] == true)
+                if(@columnas[posX][posY] == true)
+                    if(@columnas[posX+1][posY+1] == true)
+                        puntaje += 1
                     end
                 end
             end
