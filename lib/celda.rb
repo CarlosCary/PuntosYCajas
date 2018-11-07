@@ -3,7 +3,7 @@ class Celda
     def initialize()
         @vacia=true
         @completa=false
-        @arriba=false
+        @arriba=Linea.new()
         @abajo=false
         @derecha=false
         @izquierda=false

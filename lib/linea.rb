@@ -1,4 +1,4 @@
-class Fila
+class Linea
     def initialize()
         @vacia=true
     end

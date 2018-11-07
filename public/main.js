@@ -43,6 +43,10 @@ function calcularCoordenadas(posX, posY,posX2, posY2){
       const coordX2=5+(100*(posX2-1));        
       const coordY=5+(100*(posY-1));
       const coordY2=5+(100*(posY2-1));
+      console.log(coordX);
+      console.log(coordY);
+      console.log(coordX2);
+      console.log(coordY2);
       dibujarLinea(coordX,coordY,coordX2,coordY2);
 }
 
@@ -93,6 +97,10 @@ function leerCoordenadas(){
               calcularCoordenadas(posX,posY,posX2,posY2);
           }
       }
+        document.querySelector('#posX').value="";
+        document.querySelector('#posY').value="";
+        document.querySelector('#posX2').value="";
+        document.querySelector('#posY2').value="";
 }
 
 function manejadorDeEventos() {
