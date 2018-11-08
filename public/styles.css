@@ -14,7 +14,14 @@ body {
   margin-bottom: 10%;
 }
 
-.size-32md {
+.size-64md {
   font-size: 64px;
-  padding-right: 1px;
+}
+
+.apagado {
+  visibility: hidden;
+}
+
+.azul {
+  color: darkblue;
 }

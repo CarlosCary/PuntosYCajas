@@ -1,25 +1,33 @@
 class Tablero
 
     def initialize()
-        @arregloFilas=true
-        @arregloColumnas=true
+        @tamanhio = 4
+        @arregloFilas = true
+        @arregloColumnas = true
         @columnas= Array.new(4) { Array.new(4, 0) }
         @filas= Array.new(4) { Array.new(4, 0) }
+        inicializarColumnasFilas()
     end
 
     def inicializarColumnasFilas()
-        for i in 0..4
-            for j in 0..4
+        for i in 0..4-1
+            for j in 0..4-1
                 @columnas[i][j] = false
                 @filas[i][j] = false
             end
         end
     end
 
-    def convertirCoordenadasAFilasOColumnas(coordX,coodY,coordX2,coordY2)
-        if(coordX == coordX2)
-        end
-        if(coordY == coordY2)
+    def convertirCoordenadasAFilasOColumnas(coordX, coordY, coordX2, coordY2)
+        if((coordX != coordX2) || (coordY != coordY2))
+            if(coordX == coordX2)
+                coordenadaColumna = [coordY,coordY2].min
+                insertarColumna(coordX, coordenadaColumna)
+            end
+            if(coordY == coordY2)
+                coordenadaFila = [coordX,coordX2].min
+                insertarFila(coordenadaFila,coordY)
+            end
         end
     end
 
@@ -40,8 +48,8 @@ class Tablero
     end
 
     def insertarColumna(posX, posY)
-        @columnas[posX][posY] = true
         @arregloColumnas = false
+        @columnas[posX][posY] = true
         puntaje = verificarSiSeFormaUnaCajaDerechaConColumna(posX,posY)
         puntaje += verificarSiSeFormaUnaCajaIzquierdaConColumna(posX,posY)
         return puntaje
@@ -103,5 +111,17 @@ class Tablero
             end
         end
         return puntaje
+    end
+    
+    def obtenerFilas()
+        return @filas
+    end
+
+    def obtenerColumnas()
+        return @columnas
+    end
+    
+    def obtenerTamanhio()
+        return @tamanhio
     end
 end
