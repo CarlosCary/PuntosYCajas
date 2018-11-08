@@ -1,0 +1,16 @@
+h1{
+    text-align: center;
+    padding-top: 1em;
+  }
+
+  #boton{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 5em;
+
+  }
+
+  #inputs{
+    padding: 5em 25em 0 25em;
+  }
