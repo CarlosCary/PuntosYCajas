@@ -4,29 +4,32 @@ class Tablero
         @tamanhio = 4
         @arregloFilas = true
         @arregloColumnas = true
-        @columnas= Array.new(4) { Array.new(4, 0) }
-        @filas= Array.new(4) { Array.new(4, 0) }
-        inicializarColumnasFilas()
+        @columnas= Array.new(3) { Array.new(4, false) }
+        @filas= Array.new(4) { Array.new(3, false) }
     end
 
-    def inicializarColumnasFilas()
-        for i in 0..4-1
-            for j in 0..4-1
-                @columnas[i][j] = false
-                @filas[i][j] = false
+    def verificarAdyacencia(coordX, coordY, coordX2, coordY2)
+        sonAdyacentes=false
+        distanciaX=(coordX-coordX2).abs
+        distanciaY=(coordY-coordY2).abs
+        if(distanciaX!=distanciaY)
+            if((distanciaX<=1)&&(distanciaY<=1))            
+                sonAdyacentes=true
             end
         end
+        return sonAdyacentes
     end
+    
 
     def convertirCoordenadasAFilasOColumnas(coordX, coordY, coordX2, coordY2)
-        if((coordX != coordX2) || (coordY != coordY2))
+        if(verificarAdyacencia(coordX, coordY, coordX2, coordY2))
             if(coordX == coordX2)
                 coordenadaColumna = [coordY,coordY2].min
-                insertarColumna(coordX, coordenadaColumna)
+                insertarColumna(coordenadaColumna, coordX)
             end
             if(coordY == coordY2)
                 coordenadaFila = [coordX,coordX2].min
-                insertarFila(coordenadaFila,coordY)
+                insertarFila(coordY,coordenadaFila)
             end
         end
     end
@@ -90,8 +93,8 @@ class Tablero
         puntaje=0
         if(posY>0)
             if(@columnas[posX-1][posY]==true)
-                if(@filas[posX-1][posY]==true)
-                    if(@filas[posX-1][posY+1]==true)
+                if(@filas[posX][posY-1]==true)
+                    if(@filas[posX+1][posY-1]==true)
                         puntaje+=1
                     end
                 end
@@ -102,7 +105,7 @@ class Tablero
     def verificarSiSeFormaUnaCajaDerechaConColumna(posX,posY)
         puntaje=0
         if(posY<3)
-            if(@columnas[posX+1][posY]==true)
+            if(@columnas[posX][posY]==true)
                 if(@filas[posX][posY]==true)
                     if(@filas[posX][posY+1]==true)
                         puntaje+=1
@@ -123,5 +126,13 @@ class Tablero
     
     def obtenerTamanhio()
         return @tamanhio
+    end
+
+    def obtenerUnaFila(posX,posY)
+        return @filas[posX][posY]
+    end
+
+    def obtenerUnaColumna(posX,posY)
+        return @columnas[posX][posY]
     end
 end
