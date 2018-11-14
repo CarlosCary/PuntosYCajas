@@ -10,6 +10,6 @@
      click_on(crear)
   end
   
-  Then("deberia redirigirme a la pagina con la url {string}") do |string|
-    visit('/configuracion')
+  Then("deberia redirigirme a la pagina con la url {string}") do |url|
+    expect(page).to have_current_path(url)
   end
