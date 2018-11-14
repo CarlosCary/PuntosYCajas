@@ -1,6 +1,7 @@
 require 'sinatra'
 require './lib/Tablero'
 
+
 class App < Sinatra::Base
     $tablero = Tablero.new
 
