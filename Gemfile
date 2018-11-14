@@ -7,6 +7,7 @@ gem "rspec"
 gem "simplecov"
 gem "simplecov-console"
 gem "capybara"
+<<<<<<< HEAD
 gem "rack"
 gem "nokogiri"
 gem "matts_tictactoe_core"
@@ -25,3 +26,6 @@ group :development do
   gem "guard"
   gem "guard-rspec"
 end
+=======
+gem "rake"
+>>>>>>> 3edf453abfb0e874fe75f9bc25331a0afe5001a0
