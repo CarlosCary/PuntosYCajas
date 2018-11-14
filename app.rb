@@ -1,5 +1,5 @@
 require 'sinatra'
-require './lib/Tablero'
+require './lib/tablero'
 
 
 class App < Sinatra::Base
