@@ -13,4 +13,5 @@ Feature: Tablero
     
     Scenario: un jugador hace una jugada
         Given un jugador que esta en medio de una partida
-        Then deberia poder insertar las coordenadas de los puntos de la linea
+        When ingresa las coordenadas de los puntos "0" "0" y "0" "1"
+        Then se deberia dibujar una linea entre esos puntos

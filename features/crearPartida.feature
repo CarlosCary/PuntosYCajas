@@ -3,6 +3,6 @@ Feature: CrearPartida
     Quiero configurar mi partida
     Para jugar con configuraciones de mi agrado
 
-    Scenario: se esta configurando una partida
+    Scenario: configuracion de la partida
         Given un jugador que esta creando una partida
-        Then deberia poder ingresar las configuraciones para el juego que desee
+        Then deberia ver las configuraciones de tamanhio del tablero y numero de jugadores
