@@ -10,4 +10,4 @@ Feature: Bienvenida
    Scenario: Boton crear partida
         Given visito la pagina principal
         When presiono el boton "Crear Partida"
-        Then deberia redirigirme a la pagina con la url "/configuracion"
+        Then deberia redirigirme a la pagina para "/configuracion" ingresar mis configuraciones

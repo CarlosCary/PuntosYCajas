@@ -1,11 +1,9 @@
 Given("un jugador que esta creando una partida") do
     visit('/')
-  end
-
-Then("deberia poder ingresar las configuraciones para el juego que desee") do
     click_button('Crear Partida')
+  end
+  
+  Then("deberia ver las configuraciones de tamanhio del tablero y numero de jugadores") do
     page.find('form').find('select')
-    page.find('form').find('input')
-    page.select '2', from: 'numJugadores' 
-    page.fill_in 'tamTablero', with: '4'
+    page.find('form').find('input')   
   end
