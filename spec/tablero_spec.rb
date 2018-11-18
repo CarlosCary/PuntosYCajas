@@ -1,16 +1,20 @@
 require "./lib/tablero"
 describe Tablero do
+
     before(:each) do
         @tb=Tablero.new()
     end
+
     it "filas y columnas deberian estar vacias al crearlas" do
       expect(@tb.arregloFilasEstaVacio()).to eq true
       expect(@tb.arregloColumnasEstaVacio()).to eq true
     end
+
     it "arreglo de filas no deberia estar vacio al insertar un elemento" do
         @tb.insertarFila(0,0)
         expect(@tb.arregloFilasEstaVacio()).to eq false
     end
+
     it "arreglo de columnas no deberia estar vacio al insertar un elemento" do
         @tb.insertarColumna(0,0)
         expect(@tb.arregloColumnasEstaVacio()).to eq false
@@ -21,16 +25,78 @@ describe Tablero do
         expect(@tb.comprobarSiExisteColumnaDibujadaEnPos(0,0)).to eq true
     end
 
-    it "llenar columnas y filas no adyacentes para formar una 'caja' no proporcionan ningun punto" do
+    it "llenar una fila no proporciona un punto si no existen lineas adyacentes para completar una 'caja' debajo de la fila" do
         expect(@tb.insertarFila(0,0)).to eq 0
+        expect(@tb.insertarColumna(0,0)).to eq 0
+        expect(@tb.insertarColumna(0,1)).to eq 0
+        expect(@tb.verificarSiSeFormaUnaCajaAbajoConFila(0,0)).to eq 0
+    end
+
+    
+    it "llenar una fila no proporciona un punto si no existen lineas adyacentes para completar una 'caja' encima de la fila" do
         expect(@tb.insertarFila(1,0)).to eq 0
         expect(@tb.insertarColumna(0,0)).to eq 0
         expect(@tb.insertarColumna(0,1)).to eq 0
+        expect(@tb.verificarSiSeFormaUnaCajaArribaConFila(1,0)).to eq 0
+    end
+
+    it "llenar una columna no proporciona un punto si no existen lineas adyacentes para completar la 'caja' a la izquierda de la columna" do
+        expect(@tb.insertarFila(0,0)).to eq 0
+        expect(@tb.insertarFila(0,1)).to eq 0
+        expect(@tb.insertarColumna(0,1)).to eq 0
+        expect(@tb.verificarSiSeFormaUnaCajaIzquierdaConColumna(0,1)).to eq 0
+    end
+
+    it "llenar una columna no proporciona un punto si no existen lineas adyacentes para completar la 'caja' a la derecha de la columna" do
+        expect(@tb.insertarFila(0,0)).to eq 0
+        expect(@tb.insertarFila(0,1)).to eq 0
+        expect(@tb.insertarColumna(0,0)).to eq 0
+        expect(@tb.verificarSiSeFormaUnaCajaIzquierdaConColumna(0,0)).to eq 0
+    end
+
+    it "llenar una fila de arriba para formar una 'caja' proporciona un punto" do
+        expect(@tb.insertarFila(1,0)).to eq 0
+        expect(@tb.insertarColumna(0,0)).to eq 0
+        expect(@tb.insertarColumna(0,1)).to eq 0
+        expect(@tb.insertarFila(0,0)).to eq 1
+        expect(@tb.verificarSiSeFormaUnaCajaAbajoConFila(0,0)).to eq 1
+    end
+
+    it "llenar una fila de arriba para formar una 'caja' proporciona un punto" do
+        expect(@tb.insertarFila(1,0)).to eq 0
+        expect(@tb.insertarColumna(0,0)).to eq 0
+        expect(@tb.insertarColumna(0,1)).to eq 0
+        expect(@tb.insertarFila(0,0)).to eq 1
+        expect(@tb.verificarSiSeFormaUnaCajaAbajoConFila(0,0)).to eq 1
+    end
+
+    it "llenar una fila de abajo para formar una 'caja' proporciona un punto" do
+        expect(@tb.insertarColumna(0,0)).to eq 0
+        expect(@tb.insertarColumna(0,1)).to eq 0
+        expect(@tb.insertarFila(0,0)).to eq 0
+        expect(@tb.insertarFila(1,0)).to eq 1
+        expect(@tb.verificarSiSeFormaUnaCajaArribaConFila(1,0)).to eq 1
+    end
+
+    it "llenar una columna de la derecha para formar una 'caja' proporciona un punto" do
+        expect(@tb.insertarFila(0,0)).to eq 0
+        expect(@tb.insertarFila(1,0)).to eq 0
+        expect(@tb.insertarColumna(0,0)).to eq 0
+        expect(@tb.insertarColumna(0,1)).to eq 1
+        expect(@tb.verificarSiSeFormaUnaCajaIzquierdaConColumna(0,1)).to eq 1
+    end
+
+    it "llenar una columna de la izquierda para formar una 'caja' proporcionan un punto" do
+        expect(@tb.insertarFila(0,0)).to eq 0
+        expect(@tb.insertarFila(1,0)).to eq 0
+        expect(@tb.insertarColumna(0,1)).to eq 0
+        expect(@tb.insertarColumna(0,0)).to eq 1
+        expect(@tb.verificarSiSeFormaUnaCajaDerechaConColumna(0,0)).to eq 1
     end
 
     it "los puntos (0,0) y (2,2) no deberian ser adyacentes" do
         expect(@tb.verificarAdyacencia(0,0,1,1)).to eq false
-        end
+    end
 
     it "no deberia insertar una linea entre dos puntos no adyacentes" do
     @tb.convertirCoordenadasAFilasOColumnas(0,0,2,2)
