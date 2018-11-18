@@ -4,8 +4,8 @@ class Tablero
         @tamanhio = 4
         @arregloFilas = true
         @arregloColumnas = true
-        @columnas= Array.new(3) { Array.new(4, false) }
         @filas= Array.new(4) { Array.new(3, false) }
+        @columnas= Array.new(3) { Array.new(4, false) }
     end
 
     def verificarAdyacencia(coordX, coordY, coordX2, coordY2)
@@ -65,9 +65,9 @@ class Tablero
     def verificarSiSeFormaUnaCajaAbajoConFila(posX,posY)
         puntaje = 0
         if(posX < 3)
-            if(@filas[posX][posY+1] == true)
+            if(@filas[posX+1][posY] == true)
                 if(@columnas[posX][posY] == true)
-                    if(@columnas[posX+1][posY+1] == true)
+                    if(@columnas[posX][posY+1] == true)
                         puntaje += 1
                     end
                 end
@@ -79,9 +79,9 @@ class Tablero
     def verificarSiSeFormaUnaCajaArribaConFila(posX,posY)
         puntaje=0
         if(posX>0)
-            if(@filas[posX][posY-1]==true)
-                if(@columnas[posX][posY-1]==true)
-                    if(@columnas[posX+1][posY-1]==true)
+            if(@filas[posX-1][posY]==true)
+                if(@columnas[posX-1][posY]==true)
+                    if(@columnas[posX-1][posY+1]==true)
                         puntaje+=1
                     end
                 end
@@ -90,9 +90,9 @@ class Tablero
         return puntaje
     end
     def verificarSiSeFormaUnaCajaIzquierdaConColumna(posX,posY)
-        puntaje=0
+        puntaje=0  
         if(posY>0)
-            if(@columnas[posX-1][posY]==true)
+            if(@columnas[posX][posY-1]==true)
                 if(@filas[posX][posY-1]==true)
                     if(@filas[posX+1][posY-1]==true)
                         puntaje+=1
@@ -105,9 +105,9 @@ class Tablero
     def verificarSiSeFormaUnaCajaDerechaConColumna(posX,posY)
         puntaje=0
         if(posY<3)
-            if(@columnas[posX][posY]==true)
+            if(@columnas[posX][posY+1]==true)
                 if(@filas[posX][posY]==true)
-                    if(@filas[posX][posY+1]==true)
+                    if(@filas[posX+1][posY]==true)
                         puntaje+=1
                     end
                 end
