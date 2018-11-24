@@ -1,37 +1,108 @@
 class Tablero
-
-    def initialize()
-        @tamanhio = 4
+    def initialize(tam)
+        @tamanhio = tam
         @arregloFilas = true
         @arregloColumnas = true
-        @filas= Array.new(4) { Array.new(3, false) }
-        @columnas= Array.new(3) { Array.new(4, false) }
+        @filas= Array.new(tam) { Array.new(tam-1, false) }
+        @columnas= Array.new(tam-1) { Array.new(tam, false) }
     end
 
-    def verificarAdyacencia(coordX, coordY, coordX2, coordY2)
-        sonAdyacentes=false
-        distanciaX=(coordX-coordX2).abs
-        distanciaY=(coordY-coordY2).abs
-        if(distanciaX!=distanciaY)
-            if((distanciaX<=1)&&(distanciaY<=1))            
-                sonAdyacentes=true
-            end
+    def comprobarSiFilaEstaVacia(posX,posY)
+        if(@filas[posX][posY]==false)
+            return true
+        else
+            return false
         end
-        return sonAdyacentes
     end
     
-
-    def convertirCoordenadasAFilasOColumnas(coordX, coordY, coordX2, coordY2)
-        if(verificarAdyacencia(coordX, coordY, coordX2, coordY2))
-            if(coordX == coordX2)
-                coordenadaColumna = [coordY,coordY2].min
-                insertarColumna(coordenadaColumna, coordX)
-            end
-            if(coordY == coordY2)
-                coordenadaFila = [coordX,coordX2].min
-                insertarFila(coordY,coordenadaFila)
-            end
+    def comprobarSiColumnaEstaVacia(posX,posY)
+        if(@columnas[posX][posY]==false)
+            return true
+        else
+            return false
         end
+    end
+
+    def insertarFilasOColumnas(numeroCaja,direccionLinea)
+        coordX=nil
+        coordY=nil
+        puntaje=0
+        if(direccionLinea=="arriba"||direccionLinea=="abajo")
+            arrayCoordenadas=convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(numeroCaja,direccionLinea)
+            if(arrayCoordenadas.any?)
+                puntaje+=insertarFila(arrayCoordenadas[0],arrayCoordenadas[1])
+            end
+        else
+            arrayCoordenadas=convertirNumeroDeCajaYDireccionACoordenadasColumna(numeroCaja,direccionLinea)
+            if(arrayCoordenadas.any?)
+                puntaje+=insertarColumna(arrayCoordenadas[0],arrayCoordenadas[1])
+            end
+        end                
+        return puntaje
+    end
+
+    def convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(numeroCaja,direccionLinea)
+        contadorCaja=0
+        coordX=nil
+        coordY=nil
+        if(direccionLinea=="arriba")
+            for i in 0..@tamanhio-1
+                for j in 0..@tamanhio-2              
+                        if(numeroCaja==contadorCaja)                            
+                            if(comprobarSiFilaEstaVacia(i,j))
+                                coordX=i
+                                coordY=j
+                            end
+                        end                
+                    contadorCaja+=1
+                end
+            end                        
+        else
+            for i in 0..@tamanhio-1
+                for j in 0..@tamanhio-2 
+                    if (numeroCaja==contadorCaja)
+                        if(comprobarSiFilaEstaVacia(i+1,j))
+                             coordX=i+1
+                             coordY=j
+                        end
+                    end
+                    contadorCaja+=1
+                end
+            end     
+        end
+        return coordX, coordY
+    end
+
+    def convertirNumeroDeCajaYDireccionACoordenadasColumna(numeroCaja,direccionLinea)
+        contadorCaja=0
+        coordX=nil
+        coordY=nil
+        if(direccionLinea=="izquierda")
+            for i in 0..@tamanhio-2
+                for j in 0..@tamanhio-1
+                        if(numeroCaja==contadorCaja)
+                            if(comprobarSiColumnaEstaVacia(i,j))                                
+                                coordX=i
+                                coordY=j
+                            end
+                        end     
+                  contadorCaja+=1               
+                end
+            end                        
+        else
+            for i in 0..@tamanhio-2
+                for j in 0..@tamanhio-1
+                    if (numeroCaja==contadorCaja)
+                        if(comprobarSiColumnaEstaVacia(i,j+1))
+                            coordX=i
+                            coordY=j+1
+                        end
+                    end
+                   contadorCaja+=1
+                end
+            end  
+        end
+        return coordX,coordY
     end
 
     def arregloFilasEstaVacio()
@@ -64,7 +135,7 @@ class Tablero
 
     def verificarSiSeFormaUnaCajaAbajoConFila(posX,posY)
         puntaje = 0
-        if(posX < 3)
+        if(posX < @tamanhio-1)
             if(@filas[posX+1][posY] == true)
                 if(@columnas[posX][posY] == true)
                     if(@columnas[posX][posY+1] == true)
@@ -89,6 +160,7 @@ class Tablero
         end
         return puntaje
     end
+
     def verificarSiSeFormaUnaCajaIzquierdaConColumna(posX,posY)
         puntaje=0  
         if(posY>0)
@@ -102,9 +174,10 @@ class Tablero
         end
         return puntaje
     end
+
     def verificarSiSeFormaUnaCajaDerechaConColumna(posX,posY)
         puntaje=0
-        if(posY<3)
+        if(posY<@tamanhio-1)
             if(@columnas[posX][posY+1]==true)
                 if(@filas[posX][posY]==true)
                     if(@filas[posX+1][posY]==true)

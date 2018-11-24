@@ -1,9 +1,8 @@
 require 'sinatra'
 require './lib/tablero'
 
-
 class App < Sinatra::Base
-    $tablero = Tablero.new
+    $tablero = Tablero.new(4)
 
     get '/' do
         erb:bienvenida
@@ -21,14 +20,14 @@ class App < Sinatra::Base
 
     get '/partidaJugando' do 
         @tam = 4
-        $tablero.convertirCoordenadasAFilasOColumnas(0, 0, 0, 1)
+        $tablero.insertarFilasOColumnas(0, 'arriba')
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
         erb :partida
     end
 
     post '/partidaJugando1' do
-        $tablero.convertirCoordenadasAFilasOColumnas(params[:punto1PosX].to_i, params[:punto1PosY].to_i, params[:punto2PosX].to_i, params[:punto2PosY].to_i)
+        $tablero.insertarFilasOColumnas(params[:numeroCaja].to_i, params[:direccionLinea].to_s)
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
         @tam = $tablero.obtenerTamanhio 

@@ -10,16 +10,16 @@
         <h1>Ingresa tus coordenadas</h1>
         <div class="form-group">
             <form action = '/partidaJugando1' method = 'post'>
-                <p>Coordenadas primer punto entre 0-3</p>
-                <span>Coord X</span>
-                <input type='number' name='punto1PosX' id='posX' min='0' max='3'>
-                <span>Coord Y</span>
-                <input type='number' name='punto1PosY' id='posY' min='0' max='3'>
-                <p>Coordenadas segundo punto entre 0-3</p>
-                <span>Coord X</span>
-                <input type='number' name='punto2PosX' id='posX2' min='0' max='3'>
-                <span>Coord Y</span>
-                <input type='number' name='punto2PosY' id='posY2' min='0' max='3'>
+                <p>Elije la caja cuya linea desees llenar</p>
+                <span>Número de Caja</span>
+                <input id='numCaja' type='number' name='numeroCaja'  min='0' max='9'>
+                <p>Linea</p>
+                <select id="direccionLinea" name="direccionLinea" selected="arriba">
+                <option value="arriba">arriba</option>
+                <option value="abajo">abajo</option>
+                <option value="izquierda">izquierda</option>
+                <option value="derecha">derecha</option>
+                </select>
                 <input type = "hidden" value = "<% @tablero%>" name = "tablero">
                 <input type = "submit" value = "Realizar jugada" id="realizarJugada">
             </form>
