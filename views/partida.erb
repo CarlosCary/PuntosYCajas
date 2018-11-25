@@ -4,6 +4,7 @@
         <title>Puntos y Cajas</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href = "styles.css" />
+        <link rel="stylesheet" type="text/css" href = "table.css" />
         <script src="main.js" defer></script>
     </head>
     <body>
@@ -24,39 +25,17 @@
                 <input type = "submit" value = "Realizar jugada" id="realizarJugada">
             </form>
         </div>
-        <table id = "tablero-juego">
-            <%for i in 0..@tam-1 %>
-                <tr>
-                    <td class = "size-64md">
-                        <%for j in 0..@tam-1 %>
-                            .
-                            <% if(i != 0) %>
-                                <% if(@columnas[i-1][j]) %>
-                                    <span class = "azul">|</span>
-                                <%else%>
-                                    <span class = "apagado">|</span>
-                                <% end %>
-                            <% end %>
-                            <% if(i == 0) %>
-                                <span class = "apagado">&nbsp</span>
-                            <% end %>
-                            
-                            <% if(j != @tam - 1) %>
-                                <% if(@filas[i][j]) %>
-                                    <span class = "azul">_</span>
-                                <%else%>
-                                    <span class = "apagado">_</span>
-                                <% end %>
-                            <% end %>
-                            
-                            
-                        <% end %>
-                    </td>
+        <div id = "tablero">
+            <%for i in 1..@tam-1 %>
+                    <%for j in 1..@tam-1 %>
                     
-                </tr>
-            <% end %>
-            
-        </table>
+                    <div class = "caja" style = "border-top-color: blue">
+                        <%= @filas[i - 1][j - 1] %>
+                    </div>
+                    <% end %>
+                    <div class = "clean"></div>
+            <% end %>    
+        </div>
 
         
     </body>

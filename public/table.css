@@ -1,0 +1,14 @@
+.caja {
+    width: 200px;
+    height: 200px;
+    float: left;
+    border-color: black;
+    border-style: solid;
+}
+.clean {
+    clear: both;
+}
+
+.jugador1 {
+    
+}
