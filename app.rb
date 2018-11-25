@@ -20,13 +20,16 @@ class App < Sinatra::Base
 
     get '/partidaJugando' do 
         @tam = 4
+        @numeroCaja = 1
         $tablero.insertarFilasOColumnas(0, 'arriba')
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
+        
         erb :partida
     end
 
     post '/partidaJugando1' do
+        @numeroCaja = "1" 
         $tablero.insertarFilasOColumnas(params[:numeroCaja].to_i, params[:direccionLinea].to_s)
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
