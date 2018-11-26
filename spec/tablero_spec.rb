@@ -9,11 +9,6 @@ describe Tablero do
     it "filas y columnas de la clase linea deberian estar vacias al crearlas" do
         expect(@tb.arregloFilasEstaVacio()).to eq true
         expect(@tb.arregloColumnasEstaVacio()).to eq true
-      end
-  
-    it "Al insertar una fila, el valor de disponibilidad en el tablero deberia cambiar a false" do
-        @tb.insertarFila(0,0)
-        expect(@tb.comprobarSiFilaEstaVacia(0,0)).to eq false
     end
 
     it "Al insertar una columna, el valor de disponibilidad en el tablero deberia cambiar a false" do
@@ -21,16 +16,44 @@ describe Tablero do
         expect(@tb.comprobarSiColumnaEstaVacia(0,0)).to eq false
     end
 
-    it "Las coordenadas correspondientes a la entrada caja '0' y direccion de linea 'arriba' deberian ser '[0][0]' de la matriz de filas " do
-        array=@tb.convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(0,"arriba")
-        expect(array[0]).to eq 0
-        expect(array[1]).to eq 0
+    it "arreglo de filas no deberia estar vacio al insertar un elemento" do
+        @tb.insertarFila(0,0)
+        expect(@tb.arregloFilasEstaVacio()).to eq false
     end
 
-    it "Las coordenadas correspondientes a la entrada caja '0' y direccion de linea 'abajo' deberian ser '[1][0] de la matriz de filas' " do
-        array=@tb.convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(0,"abajo")
-        expect(array[0]).to eq 1
-        expect(array[1]).to eq 0
+    it "al insertar un elemento en la primera columna del tablero, se dibuja" do
+        @tb.insertarColumna(0,0)
+        expect(@tb.comprobarSiExisteColumnaDibujadaEnPos(0,0)).to eq true
+    end
+
+    it "arreglo de columnas no deberia estar vacio al insertar un elemento" do
+        @tb.insertarColumna(0,0)
+        expect(@tb.arregloColumnasEstaVacio()).to eq false
+    end
+
+    it "Al insertar una fila, el valor de disponibilidad en el tablero deberia cambiar a false" do
+        @tb.insertarFila(0,0)
+        expect(@tb.comprobarSiFilaEstaVacia(0,0)).to eq false
+    end
+
+    it "llenar una fila 'arriba' en la caja '0' deberia cambiar el valor a 'true' de la matriz '@filas' en la posicion '0,0'" do
+        @tb.insertarFilasOColumnas(0,"arriba")
+        expect(@tb.comprobarSiFilaEstaVacia(0,0)).to eq false
+    end
+
+    it "llenar una fila 'abajo' en la caja '0' deberia cambiar el valor a 'false' de la matriz '@filas' en la posicion '1,0'" do
+        @tb.insertarFilasOColumnas(0,"abajo")
+        expect(@tb.comprobarSiFilaEstaVacia(1,0)).to eq false
+    end
+
+    it "llenar una columna 'izquierda' en la caja '0' deberia cambiar el valor a 'false' de la matriz '@columnas' en la posicion '0,0'" do
+        @tb.insertarFilasOColumnas(0,"izquierda")
+        expect(@tb.comprobarSiColumnaEstaVacia(0,0)).to eq false
+    end
+
+    it "llenar una columna 'derecha' en la caja '0' deberia dibujar la linea de la matriz '@columnas' en la posicion '0,1'" do
+        @tb.insertarFilasOColumnas(0, "derecha")
+        expect(@tb.comprobarSiColumnaEstaVacia(0, 1)).to eq false
     end
 
     it "Las coordenadas correspondientes a la entrada caja '0' y direccion de linea 'izquierda' deberian ser '[0][0]' de la matriz de columnas " do
@@ -45,19 +68,51 @@ describe Tablero do
         expect(array[1]).to eq 1
     end
 
-    it "arreglo de filas no deberia estar vacio al insertar un elemento" do
-        @tb.insertarFila(0,0)
-        expect(@tb.arregloFilasEstaVacio()).to eq false
+    it "Las coordenadas correspondientes a la entrada caja '0' y direccion de linea 'arriba' deberian ser '[0][0]' de la matriz de filas " do
+        array=@tb.convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(0,"arriba")
+        expect(array[0]).to eq 0
+        expect(array[1]).to eq 0
     end
 
-    it "arreglo de columnas no deberia estar vacio al insertar un elemento" do
-        @tb.insertarColumna(0,0)
-        expect(@tb.arregloColumnasEstaVacio()).to eq false
+    it "Las coordenadas correspondientes a la entrada caja '0' y direccion de linea 'abajo' deberian ser '[1][0] de la matriz de filas' " do
+        array=@tb.convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(0,"abajo")
+        expect(array[0]).to eq 1
+        expect(array[1]).to eq 0
     end
 
-    it "al insertar un elemento en la primera columna del tablero, se dibuja" do
-        @tb.insertarColumna(0,0)
-        expect(@tb.comprobarSiExisteColumnaDibujadaEnPos(0,0)).to eq true
+    it "al insertar una linea en la caja '0' y en la posición 'arriba' deberia dibujar la linea en la posicion a correspondiente en el tablero" do
+        @tb.insertarFilasOColumnas(0,"arriba")
+        expect(@tb.comprobarSiFilaEstaVacia(0,0)).to eq false
+    end
+
+    it "al insertar dos lineas en la caja '0' y en las posición 'arriba' y 'abajo' deberia dibujar las lines en las posiciones a correspondientes en el tablero" do
+        @tb.insertarFilasOColumnas(0,"arriba")
+        @tb.insertarFilasOColumnas(0,"abajo")
+        expect(@tb.comprobarSiFilaEstaVacia(0,0)).to eq false
+        expect(@tb.comprobarSiFilaEstaVacia(1,0)).to eq false
+    end
+
+    it "llenar una fila no proporciona un punto si no existen lineas adyacentes para completar una 'caja' encima de la fila" do
+        expect(@tb.insertarFilasOColumnas(0,"izquierda")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"abajo")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"derecha")).to eq 0
+    end
+
+    it "al insertar las lineas necesarias para formar una caja se otorga un punto" do 
+        expect(@tb.insertarFilasOColumnas(0,"izquierda")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"abajo")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"derecha")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"arriba")).to eq 1
+    end
+
+    it "al insertar las lineas necesarias para formar dos cajas simultaneamente se otorgan dos puntos " do
+        expect(@tb.insertarFilasOColumnas(0,"arriba")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"izquierda")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"abajo")).to eq 0
+        expect(@tb.insertarFilasOColumnas(1,"arriba")).to eq 0
+        expect(@tb.insertarFilasOColumnas(1,"derecha")).to eq 0
+        expect(@tb.insertarFilasOColumnas(1,"abajo")).to eq 0
+        expect(@tb.insertarFilasOColumnas(1,"izquierda")).to eq 2
     end
 
     it "llenar una fila no proporciona un punto si no existen lineas adyacentes para completar una 'caja' debajo de la fila" do
@@ -66,15 +121,6 @@ describe Tablero do
         expect(@tb.insertarColumna(0,1)).to eq 0
         expect(@tb.verificarSiSeFormaUnaCajaAbajoConFila(0,0)).to eq 0
     end
-
-    
-    it "llenar una fila no proporciona un punto si no existen lineas adyacentes para completar una 'caja' encima de la fila" do
-        expect(@tb.insertarFila(1,0)).to eq 0
-        expect(@tb.insertarColumna(0,0)).to eq 0
-        expect(@tb.insertarColumna(0,1)).to eq 0
-        expect(@tb.verificarSiSeFormaUnaCajaArribaConFila(1,0)).to eq 0
-    end
-    
 
     it "llenar una columna no proporciona un punto si no existen lineas adyacentes para completar la 'caja' a la izquierda de la columna" do
         expect(@tb.insertarFila(0,0)).to eq 0
@@ -126,26 +172,6 @@ describe Tablero do
         expect(@tb.insertarFilasOColumnas(0,"abajo")).to eq 0
         expect(@tb.insertarFilasOColumnas(0,"izquierda")).to eq 1
         expect(@tb.verificarSiSeFormaUnaCajaDerechaConColumna(0,0)).to eq 1
-    end
-
-    it "llenar una fila 'arriba' en la caja '0' deberia cambiar el valor a 'true' de la matriz '@filas' en la posicion '0,0'" do
-        @tb.insertarFilasOColumnas(0,"arriba")
-        expect(@tb.comprobarSiFilaEstaVacia(0,0)).to eq false
-    end
-
-    it "llenar una fila 'abajo' en la caja '0' deberia cambiar el valor a 'false' de la matriz '@filas' en la posicion '1,0'" do
-        @tb.insertarFilasOColumnas(0,"abajo")
-        expect(@tb.comprobarSiFilaEstaVacia(1,0)).to eq false
-    end
-
-    it "llenar una columna 'izquierda' en la caja '0' deberia cambiar el valor a 'false' de la matriz '@columnas' en la posicion '0,0'" do
-        @tb.insertarFilasOColumnas(0,"izquierda")
-        expect(@tb.comprobarSiColumnaEstaVacia(0,0)).to eq false
-    end
-
-    it "llenar una columna 'derecha' en la caja '0' deberia dibujar la linea de la matriz '@columnas' en la posicion '0,1'" do
-        @tb.insertarFilasOColumnas(0, "derecha")
-        expect(@tb.comprobarSiColumnaEstaVacia(0, 1)).to eq false
     end
 
     it "cuando dibujo una linea en la caja 3 arriba y esta disponible deberia pintarse de un color" do
