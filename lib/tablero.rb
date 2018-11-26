@@ -300,7 +300,7 @@ class Tablero
         if(!comprobarSiColumnaEstaVacia(cordenadasDerecha[0], cordenadasDerecha[1]))
             colorCaja += "border-right-color:" + @columnas[cordenadasDerecha[0]][cordenadasDerecha[1]].obtenerColor() + ";"
         end
-        
+
         colorCaja += "background-color:" + @colorFondoCajas[numeroCaja]
         return colorCaja;
     end

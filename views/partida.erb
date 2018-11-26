@@ -1,50 +1,69 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Puntos y Cajas</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href = "styles.css" />
-        <link rel="stylesheet" type="text/css" href = "table.css" />
-        
-    </head>
-    <body>
-        <h1>Ingresa tus coordenadas</h1>
-        <%for i in 0..@numJugadores-1%>
-        <div style="display: inline-block">
-            <h3 class = "nombreJugador" style = <%= @jugadores[i].obtenerColor %>> <%= @jugadores[i].nombre %> </h3>
-            <h3 class="puntaje"><%=@jugadores[i].puntaje%></h3>
-        </div>
-        <% end %>
-        <br>
-        <div style = "display: inline-block">
-            <h4 class = "turnoJugador" style = <%= @jugadores[$tablero.turno].obtenerColor %> >Es el turno de : <%= @jugadores[$tablero.turno].nombre%></h4>            
-        </div>
+
+<head>
+    <title>Puntos y Cajas</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <link rel="stylesheet" type="text/css" href="table.css" />
+    <link rel="stylesheet" type="text/css" href="partida.css">
+
+
+</head>
+
+<body>
+    <!-- <h1>Puntos y Cajas</h1> -->
+    <%for i in 0..@numJugadores-1%>
+    <div style="display: inline-block">
+        <h3 class="nombreJugador" style=<%=@jugadores[i].obtenerColor %>>
+            <%= @jugadores[i].nombre %>
+        </h3>
+        <h3 class="puntaje">
+            <%=@jugadores[i].puntaje%>
+        </h3>
+    </div>
+    <% end %>
+    <br>
+    <div style="display: inline-block">
+        <h4 class="turnoJugador" style=<%=@jugadores[$tablero.turno].obtenerColor %> >Es el turno de :
+            <%= @jugadores[$tablero.turno].nombre%>
+        </h4>
+    </div>
+    <div class="centrar">
         <div class="form-group">
-            <form action = '/partidaJugando1' method = 'post'>
-                <p>Elije la caja cuya linea desees llenar</p>
-                <span>Número de Caja</span>
-                <input value = '0' id = 'numCaja' type = 'number' name = 'numeroCaja'  min = '0' max = <%=(( @tam - 1) * (@tam - 1) ) - 1%> >
-                <p>Linea</p>
-                <select id="direccionLinea" name="direccionLinea" selected="arriba">
-                    <option value="arriba">arriba</option>
-                    <option value="abajo">abajo</option>
-                    <option value="izquierda">izquierda</option>
-                    <option value="derecha">derecha</option>
-                </select> 
-                <input type = "submit" value = "Realizar jugada" id="realizarJugada">
+            <!-- <p>Elije la caja cuya linea desees llenar</p> -->
+            <form action='/partidaJugando1' method='post'>
+                <div class="line-container">
+                    <span>Número de Caja</span>
+                    <input value='0' id='numCaja' type='number' name='numeroCaja' min='0' max=<%=(( @tam - 1) * (@tam -
+                        1) ) - 1%> >
+                    <span>Linea</span>
+                    <select id="direccionLinea" name="direccionLinea" selected="arriba">
+                        <option value="arriba">arriba</option>
+                        <option value="abajo">abajo</option>
+                        <option value="izquierda">izquierda</option>
+                        <option value="derecha">derecha</option>
+                    </select>
+                    <br>
+                    <input type="submit" value="Realizar jugada" id="realizarJugada">
+                </div>
             </form>
         </div>
-        <div id = "tablero">
+        <div id="tablero">
             <%n = 0%>
             <%for i in 1..@tam-1 %>
-                    <%for j in 1..@tam-1 %>
-                        <div class = "caja" style = <%= $tablero.pintarCaja(n) %>  >
-                            <p><%= n %> </p>
-                        </div>
-                        <%n += 1%>
-                    <% end %>
-                    <div class = "clean"></div>
-            <% end %>    
+            <%for j in 1..@tam-1 %>
+            <div class="caja" style=<%=$tablero.pintarCaja(n) %> >
+                <p>
+                    <%= n %>
+                </p>
+            </div>
+            <%n += 1%>
+            <% end %>
+            <div class="clean"></div>
+            <% end %>
         </div>
-    </body>
+    </div>
+</body>
+
 </html>

@@ -1,0 +1,20 @@
+.centrar{
+    text-align: center;
+}
+#tablero{
+    display: inline-block;
+}
+
+.line-container {
+    margin:0 auto;
+}
+
+.single-line {
+    display:inline-block;
+}
+input{
+    margin: 1em;
+}
+body{
+    background-color: #f4f4f4;
+}
