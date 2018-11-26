@@ -1,11 +1,40 @@
 require './lib/linea'
+require './lib/jugador'
 class Tablero
-    def initialize(tam)
+    attr_accessor :turno
+    def initialize(tam,numJugadores)
         @tamanhio = tam
+        @numeroDeJugadores = numJugadores
         @arregloFilas = true
         @arregloColumnas = true 
         @filas = Array.new(tam) { Array.new(tam-1) {Linea.new} }
         @columnas = Array.new(tam-1) { Array.new(tam) {Linea.new} }
+        @jugadores = Array.new(numJugadores) {Jugador.new}
+        @turno = 0     
+        @coloresDisponibles = ["red", "blue", "brown", "darkgreen"]
+    end
+
+    def inicializarJugadores(num)
+        for i in 1..num
+            @jugadores[i - 1].nombre = "Jugador " + i.to_s
+            @jugadores[i - 1].color = @coloresDisponibles[i - 1]
+        end
+    end
+
+    def obtenerNombreDeJugador(num)
+        return @jugadores[num].nombre
+    end
+
+    def obtenerColorDeJugador(num)
+        return @jugadores[num].color
+    end
+
+    def configurarColorDeJugador(num,colorJug)
+         @jugadores[num].color=colorJug
+    end
+
+    def configurarNombreDeJugador(num,nomJugador)
+         @jugadores[num].nombre=nomJugador
     end
 
     def comprobarSiFilaEstaVacia(posX, posY)
@@ -24,21 +53,35 @@ class Tablero
         end
     end
 
+    def incrementarTurnoYComprobarPuntaje(puntaje)
+        if(puntaje == 0)
+            @turno += 1
+        else
+            @jugadores[turno].puntaje += puntaje
+        end
+        if(@turno > (@numeroDeJugadores - 1))
+            @turno = 0        
+        end
+    end
+
     def insertarFilasOColumnas(numeroCaja, direccionLinea)
         coordX = nil
         coordY = nil
         puntaje = 0
         if(direccionLinea == "arriba" || direccionLinea == "abajo")
             arrayCoordenadas = convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(numeroCaja, direccionLinea)
-            if(arrayCoordenadas.any?)
+            if(comprobarSiFilaEstaVacia(arrayCoordenadas[0],arrayCoordenadas[1]))
                 puntaje += insertarFila(arrayCoordenadas[0],arrayCoordenadas[1])
+                incrementarTurnoYComprobarPuntaje(puntaje)
             end
         else
             arrayCoordenadas = convertirNumeroDeCajaYDireccionACoordenadasColumna(numeroCaja, direccionLinea)
-            if(arrayCoordenadas.any?)
+            if(comprobarSiColumnaEstaVacia(arrayCoordenadas[0],arrayCoordenadas[1]))
                 puntaje += insertarColumna(arrayCoordenadas[0],arrayCoordenadas[1])
+                incrementarTurnoYComprobarPuntaje(puntaje)
             end
-        end                
+        end
+        
         return puntaje
     end
 
@@ -107,7 +150,7 @@ class Tablero
     end
 
     def insertarFila(posX, posY)
-        @filas[posX][posY].dibujar("red")
+        @filas[posX][posY].dibujar(@jugadores[@turno].color)
         @arregloFilas = false
         puntaje = verificarSiSeFormaUnaCajaAbajoConFila(posX, posY)
         puntaje += verificarSiSeFormaUnaCajaArribaConFila(posX, posY)
@@ -115,15 +158,13 @@ class Tablero
     end
 
     def insertarColumna(posX, posY)
-        
-        @columnas[posX][posY].dibujar("red")
-        
+
+        @columnas[posX][posY].dibujar(@jugadores[@turno].color)
         @arregloColumnas = false
         
         puntaje = verificarSiSeFormaUnaCajaDerechaConColumna(posX, posY)
         puntaje += verificarSiSeFormaUnaCajaIzquierdaConColumna(posX, posY)
         
-
         return puntaje
     end
 
@@ -195,6 +236,10 @@ class Tablero
         return @filas
     end
 
+    def obtenerJugadores()
+        return @jugadores
+    end
+
     def obtenerColumnas()
         return @columnas
     end
@@ -238,4 +283,5 @@ class Tablero
         
         return colorCaja;
     end
+
 end

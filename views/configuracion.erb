@@ -19,15 +19,16 @@
         <h1>Configuracion</h1>
         <div id="inputs">
             <p>Numero de jugadores</p>
-            <select class="form-control" id="numJugadores">
+            <select name="numJugadores" selected="2" class="form-control" id="numJugadores">
                 <option value="2">2 jugadores</option>
                 <option value="3">3 jugadores</option>
+                <option value="4">4 jugadores</option>
             </select>
             <br>
             <br>
             <br>
             <p>Tamaño del tablero</p>
-            <input name="tamTablero" class="form-control" type="number" min="4" max="10" id="tamTablero">
+            <input value = '4' name="tamTablero" class="form-control" type="number" min="4" max="10" id="tamTablero">
         </div>
         <div id="boton">
             <button class="btn btn-info">Iniciar Partida</button>

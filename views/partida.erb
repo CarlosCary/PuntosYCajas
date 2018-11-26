@@ -9,6 +9,16 @@
     </head>
     <body>
         <h1>Ingresa tus coordenadas</h1>
+        <%for i in 0..@numJugadores-1%>
+        <div style="display: inline-block">
+            <h3 class = "nombreJugador" style = <%= @jugadores[i].obtenerColor %>> <%= @jugadores[i].nombre %> </h3>
+            <h3><%=@jugadores[i].puntaje%></h3>
+        </div>
+        <% end %>
+        <br>
+        <div style = "display: inline-block">
+            <h4 class = "nombreJugador" style = <%= @jugadores[$tablero.turno].obtenerColor %> >Es el turno de : <%= @jugadores[$tablero.turno].nombre%></h4>            
+        </div>
         <div class="form-group">
             <form action = '/partidaJugando1' method = 'post'>
                 <p>Elije la caja cuya linea desees llenar</p>
@@ -28,17 +38,13 @@
             <%n = 0%>
             <%for i in 1..@tam-1 %>
                     <%for j in 1..@tam-1 %>
-                        <div class = "caja" style=<%=$tablero.pintarCaja(n)%>  >
+                        <div class = "caja" style = <%= $tablero.pintarCaja(n) %>  >
                             <p><%= n %> </p>
                         </div>
                         <%n += 1%>
-
                     <% end %>
-                    
                     <div class = "clean"></div>
             <% end %>    
         </div>
-
-        
     </body>
 </html>

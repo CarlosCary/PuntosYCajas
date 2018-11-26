@@ -3,7 +3,7 @@ require "./lib/linea"
 describe Tablero do
 
     before(:each) do
-        @tb = Tablero.new(4)
+        @tb = Tablero.new(4,2)
     end
 
     it "filas y columnas deberian estar vacias al crearlas" do
@@ -118,7 +118,15 @@ describe Tablero do
         expect(@tb.insertarFila(0,0)).to eq 0
         expect(@tb.insertarFila(1,0)).to eq 0
         expect(@tb.insertarColumna(0,1)).to eq 0
+        expect(@tb.insertarColumna(0,0)).to eq 1
+        expect(@tb.verificarSiSeFormaUnaCajaDerechaConColumna(0,0)).to eq 1
+    end
 
+    
+    it "llenar una columna de la izquierda para formar una 'caja' proporcionan al jugador cuyo turno " do
+        expect(@tb.insertarFila(0,0)).to eq 0
+        expect(@tb.insertarFila(1,0)).to eq 0
+        expect(@tb.insertarColumna(0,1)).to eq 0
         expect(@tb.insertarColumna(0,0)).to eq 1
         expect(@tb.verificarSiSeFormaUnaCajaDerechaConColumna(0,0)).to eq 1
     end
@@ -128,12 +136,12 @@ describe Tablero do
         expect(@tb.comprobarSiFilaEstaVacia(0,0)).to eq false
     end
 
-    it "llenar una fila 'abajo' en la caja '0' deberia cambiar el valor a 'true' de la matriz '@filas' en la posicion '1,0'" do
+    it "llenar una fila 'abajo' en la caja '0' deberia cambiar el valor a 'false' de la matriz '@filas' en la posicion '1,0'" do
         @tb.insertarFilasOColumnas(0,"abajo")
         expect(@tb.comprobarSiFilaEstaVacia(1,0)).to eq false
     end
 
-    it "llenar una columna 'izquierda' en la caja '0' deberia cambiar el valor a 'true' de la matriz '@columnas' en la posicion '0,0'" do
+    it "llenar una columna 'izquierda' en la caja '0' deberia cambiar el valor a 'false' de la matriz '@columnas' en la posicion '0,0'" do
         @tb.insertarFilasOColumnas(0,"izquierda")
         expect(@tb.comprobarSiColumnaEstaVacia(0,0)).to eq false
     end
@@ -143,8 +151,61 @@ describe Tablero do
         expect(@tb.comprobarSiColumnaEstaVacia(0, 1)).to eq false
     end
 
-    it "cuando dibujo una linea en la caja 0 arriba y esta disponible deberia pintarse de un color" do
+    it "cuando dibujo una linea en la caja 3 arriba y esta disponible deberia pintarse de un color" do
+        @tb.inicializarJugadores(2)
         @tb.insertarFilasOColumnas(3, "arriba")
         expect(@tb.pintarCaja(3)).to eq "border-top-color:red;"
     end
+
+    it "los jugadores no deberian tener nombre inicialmente" do
+        expect(@tb.obtenerNombreDeJugador(0)).to eq ""
+        expect(@tb.obtenerNombreDeJugador(1)).to eq ""
+    end
+
+    it "los jugadores no deberian tener color inicialmente" do
+        expect(@tb.obtenerColorDeJugador(0)).to eq ""
+        expect(@tb.obtenerColorDeJugador(1)).to eq ""
+    end
+
+    it "deberia poder cambiar el color de un jugador" do
+        @tb.configurarColorDeJugador(0,"red")
+        expect(@tb.obtenerColorDeJugador(0)).to eq "red"
+    end
+
+    it "deberia poder cambiar el nombre de un jugador" do
+        @tb.configurarNombreDeJugador(0,"carlos")
+        expect(@tb.obtenerNombreDeJugador(0)).to eq "carlos"
+    end
+
+    it "cuando inicializo una partida con dos jugadores los nombres por defecto son 'Jugador 1' y 'Jugador 2'" do
+        @tb.inicializarJugadores(2)
+        expect(@tb.obtenerNombreDeJugador(0)).to eq "Jugador 1"
+        expect(@tb.obtenerNombreDeJugador(1)).to eq "Jugador 2"
+    end
+
+    it "cuando inicializo una partida con dos jugadores los colores por defecto son 'red' y 'blue'" do
+        @tb.inicializarJugadores(2)
+        expect(@tb.obtenerColorDeJugador(0)).to eq "red"
+        expect(@tb.obtenerColorDeJugador(1)).to eq "blue"
+    end
+
+    it "cuando inicializo un juego el turno deberia ser el del primer jugador" do
+        expect(@tb.turno).to eq 0
+    end
+
+    it "luego de que el primer jugador realiza su jugada el turno deberia ser el del segundo jugador" do
+        @tb.insertarFilasOColumnas(0,"arriba")
+        expect(@tb.turno).to eq 1
+    end
+
+    it "cuando un jugador dibuja una linea que completa dos cajas se le asigna dos puntos " do
+        expect(@tb.insertarFila(0,0)).to eq 0
+        expect(@tb.insertarFila(1,0)).to eq 0
+        expect(@tb.insertarColumna(0,0)).to eq 0
+        expect(@tb.insertarColumna(0,2)).to eq 0
+        expect(@tb.insertarFila(1,1)).to eq 0
+        expect(@tb.insertarFila(0,1)).to eq 0
+        expect(@tb.insertarColumna(0,1)).to eq 2
+    end
+
 end

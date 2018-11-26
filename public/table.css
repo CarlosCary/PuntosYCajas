@@ -10,3 +10,8 @@
 .clean {
     clear: both;
 }
+
+.nombreJugador {
+    padding-left: 2em;
+    color: white;
+}

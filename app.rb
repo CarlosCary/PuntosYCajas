@@ -13,17 +13,20 @@ class App < Sinatra::Base
     end
 
     post '/iniciarPartida' do
-        $tablero = Tablero.new(params[:tamTablero].to_i)
+        $tablero = Tablero.new(params[:tamTablero].to_i,params[:numJugadores].to_i)
+        $tablero.inicializarJugadores(params[:numJugadores].to_i)
+        @jugadores=$tablero.obtenerJugadores
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
+        @numJugadores = @jugadores.length
         @tam = $tablero.obtenerTamanhio
-        @cajaMaxima = (((@tam-1) * (@tam-1) ) -1 ).to_s
         erb :partida
     end
 
     get '/partida' do 
         @tam = $tablero.obtenerTamanhio
-        #@tam = 4
+        @jugadores=$tablero.obtenerJugadores
+        @numJugadores=@jugadores.length
         @cajaMaxima = (((@tam-1) * (@tam-1) ) -1 ).to_s
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
@@ -33,9 +36,10 @@ class App < Sinatra::Base
     end
 
     get '/partidaJugando' do 
-        @tam = $tablero.obtenerTamanhio
-        @numeroCaja = 1100
-        #$tablero.insertarFilasOColumnas(0, 'arriba')
+        @tam = 4
+        @jugadores=$tablero.obtenerJugadores
+        @numJugadores=@jugadores.length
+        $tablero.insertarFilasOColumnas(0, 'arriba')
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
         
@@ -44,6 +48,9 @@ class App < Sinatra::Base
 
     post '/partidaJugando1' do
         @numeroCaja = 1
+        @tam = $tablero.obtenerTamanhio
+        @jugadores=$tablero.obtenerJugadores
+        @numJugadores=@jugadores.length
         $tablero.insertarFilasOColumnas(params[:numeroCaja].to_i, params[:direccionLinea].to_s)
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
