@@ -5,7 +5,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href = "styles.css" />
         <link rel="stylesheet" type="text/css" href = "table.css" />
-        <script src="main.js" defer></script>
+        
     </head>
     <body>
         <h1>Ingresa tus coordenadas</h1>
@@ -13,26 +13,28 @@
             <form action = '/partidaJugando1' method = 'post'>
                 <p>Elije la caja cuya linea desees llenar</p>
                 <span>Número de Caja</span>
-                <input id='numCaja' type='number' name='numeroCaja'  min='0' max='9'>
+                <input value = '0' id = 'numCaja' type = 'number' name = 'numeroCaja'  min = '0' max = <%=(( @tam - 1) * (@tam - 1) ) - 1%> >
                 <p>Linea</p>
                 <select id="direccionLinea" name="direccionLinea" selected="arriba">
-                <option value="arriba">arriba</option>
-                <option value="abajo">abajo</option>
-                <option value="izquierda">izquierda</option>
-                <option value="derecha">derecha</option>
-                </select>
-                <input type = "hidden" value = "<% @tablero%>" name = "tablero">
+                    <option value="arriba">arriba</option>
+                    <option value="abajo">abajo</option>
+                    <option value="izquierda">izquierda</option>
+                    <option value="derecha">derecha</option>
+                </select> 
                 <input type = "submit" value = "Realizar jugada" id="realizarJugada">
             </form>
         </div>
         <div id = "tablero">
+            <%n = 0%>
             <%for i in 1..@tam-1 %>
                     <%for j in 1..@tam-1 %>
-                    
-                    <div class = "caja" style = "border-top-color: blue">
-                        <%= @filas[i - 1][j - 1] %>
-                    </div>
+                        <div class = "caja" style=<%=$tablero.pintarCaja(n)%>  >
+                            <p><%= n %> </p>
+                        </div>
+                        <%n += 1%>
+
                     <% end %>
+                    
                     <div class = "clean"></div>
             <% end %>    
         </div>

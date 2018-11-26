@@ -4,12 +4,12 @@ class Tablero
         @tamanhio = tam
         @arregloFilas = true
         @arregloColumnas = true 
-        @filas= Array.new(tam) { Array.new(tam-1) {Linea.new} }
-        @columnas= Array.new(tam-1) { Array.new(tam) {Linea.new} }
+        @filas = Array.new(tam) { Array.new(tam-1) {Linea.new} }
+        @columnas = Array.new(tam-1) { Array.new(tam) {Linea.new} }
     end
 
     def comprobarSiFilaEstaVacia(posX, posY)
-        if(@filas[posX][posY].dibujado)
+        if(@filas[posX][posY].lineaEstaDibujada())
             return false
         else
             return true
@@ -17,55 +17,51 @@ class Tablero
     end
     
     def comprobarSiColumnaEstaVacia(posX, posY)
-        if(@columnas[posX][posY].dibujado)
+        if(@columnas[posX][posY].lineaEstaDibujada())
             return false
         else
             return true
         end
     end
 
-    def insertarFilasOColumnas(numeroCaja,direccionLinea)
+    def insertarFilasOColumnas(numeroCaja, direccionLinea)
         coordX = nil
         coordY = nil
         puntaje = 0
         if(direccionLinea == "arriba" || direccionLinea == "abajo")
-            arrayCoordenadas = convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(numeroCaja,direccionLinea)
+            arrayCoordenadas = convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(numeroCaja, direccionLinea)
             if(arrayCoordenadas.any?)
-                puntaje+=insertarFila(arrayCoordenadas[0],arrayCoordenadas[1])
+                puntaje += insertarFila(arrayCoordenadas[0],arrayCoordenadas[1])
             end
         else
-            arrayCoordenadas=convertirNumeroDeCajaYDireccionACoordenadasColumna(numeroCaja,direccionLinea)
+            arrayCoordenadas = convertirNumeroDeCajaYDireccionACoordenadasColumna(numeroCaja, direccionLinea)
             if(arrayCoordenadas.any?)
-                puntaje+=insertarColumna(arrayCoordenadas[0],arrayCoordenadas[1])
+                puntaje += insertarColumna(arrayCoordenadas[0],arrayCoordenadas[1])
             end
         end                
         return puntaje
     end
 
-    def convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(numeroCaja,direccionLinea)
-        contadorCaja=0
-        coordX=nil
-        coordY=nil
-        if(direccionLinea=="arriba")
+    def convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(numeroCaja, direccionLinea)
+        contadorCaja = 0
+        coordX = nil
+        coordY = nil
+        if(direccionLinea == "arriba")
             for i in 0..@tamanhio-1
                 for j in 0..@tamanhio-2              
-                        if(numeroCaja==contadorCaja)                            
-                            if(comprobarSiFilaEstaVacia(i,j))
-                                coordX=i
-                                coordY=j
-                            end
+                        if(numeroCaja == contadorCaja)                            
+                                coordX = i
+                                coordY = j
                         end                
-                    contadorCaja+=1
+                    contadorCaja += 1
                 end
             end                        
         else
             for i in 0..@tamanhio-1
                 for j in 0..@tamanhio-2 
                     if (numeroCaja==contadorCaja)
-                        if(comprobarSiFilaEstaVacia(i+1,j))
                              coordX=i+1
                              coordY=j
-                        end
                     end
                     contadorCaja+=1
                 end
@@ -80,25 +76,21 @@ class Tablero
         coordY = nil
         if(direccionLinea == "izquierda")
             for i in 0..@tamanhio-2
-                for j in 0..@tamanhio-1
+                for j in 0..@tamanhio-2
                         if(numeroCaja==contadorCaja)
-                            if(comprobarSiColumnaEstaVacia(i,j))                                
-                                coordX=i
-                                coordY=j
-                            end
+                                coordX = i
+                                coordY = j
                         end     
                   contadorCaja+=1               
                 end
             end                        
         else
             for i in 0..@tamanhio-2
-                for j in 0..@tamanhio-1
+                for j in 0..@tamanhio-2
                     if (numeroCaja==contadorCaja)
-                        if(comprobarSiColumnaEstaVacia(i,j+1))
-                            coordX=i
-                            coordY=j+1
-                        end
-                    end
+                            coordX = i
+                            coordY = j + 1
+                    end 
                    contadorCaja+=1
                 end
             end  
@@ -115,7 +107,7 @@ class Tablero
     end
 
     def insertarFila(posX, posY)
-        @filas[posX][posY].dibujar("#ff0000")
+        @filas[posX][posY].dibujar("red")
         @arregloFilas = false
         puntaje = verificarSiSeFormaUnaCajaAbajoConFila(posX, posY)
         puntaje += verificarSiSeFormaUnaCajaArribaConFila(posX, posY)
@@ -124,7 +116,7 @@ class Tablero
 
     def insertarColumna(posX, posY)
         
-        @columnas[posX][posY].dibujado = true
+        @columnas[posX][posY].dibujar("red")
         
         @arregloColumnas = false
         
@@ -217,5 +209,33 @@ class Tablero
 
     def obtenerUnaColumna(posX, posY)
         return @columnas[posX][posY]
+    end
+
+    def pintarCaja(numeroCaja)
+        contadorCaja = 0
+        colorCaja = ""
+        
+        cordenadasArriba = convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(numeroCaja, "arriba")
+        cordenadasAbajo = convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(numeroCaja, "abajo")
+        cordenadasIzquierda = convertirNumeroDeCajaYDireccionACoordenadasColumna(numeroCaja, "izquierda")
+        cordenadasDerecha = convertirNumeroDeCajaYDireccionACoordenadasColumna(numeroCaja, "derecha")
+
+        if(!comprobarSiFilaEstaVacia(cordenadasArriba[0], cordenadasArriba[1]))
+            colorCaja = "border-top-color:" + @filas[cordenadasArriba[0]][cordenadasArriba[1]].obtenerColor() + ";"
+        end    
+    
+        if(!comprobarSiFilaEstaVacia(cordenadasAbajo[0], cordenadasAbajo[1]))
+            colorCaja += "border-bottom-color:" + @filas[cordenadasAbajo[0]][cordenadasAbajo[1]].obtenerColor() + ";"
+        end
+    
+        if(!comprobarSiColumnaEstaVacia(cordenadasIzquierda[0], cordenadasIzquierda[1]))
+            colorCaja += "border-left-color:" + @columnas[cordenadasIzquierda[0]][cordenadasIzquierda[1]].obtenerColor() + ";"
+        end
+    
+        if(!comprobarSiColumnaEstaVacia(cordenadasDerecha[0], cordenadasDerecha[1]))
+            colorCaja += "border-right-color:" + @columnas[cordenadasDerecha[0]][cordenadasDerecha[1]].obtenerColor() + ";"
+        end
+        
+        return colorCaja;
     end
 end

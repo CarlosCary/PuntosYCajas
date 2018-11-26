@@ -5,11 +5,7 @@ Feature: Tablero
 
     Scenario: se inicio una partida
         Given un jugador que inicio una partida
-        Then deberia ver el tablero vacio
-
-    Scenario: se esta jugando una partida
-        Given un jugador que esta en medio de una partida
-        Then deberia ver el tablero con las jugadaras realizadas
+        Then deberia ver el tablero
     
     Scenario: un jugador hace una jugada
         Given un jugador que esta en medio de una partida

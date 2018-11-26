@@ -11,12 +11,12 @@ describe Tablero do
         expect(@tb.arregloColumnasEstaVacio()).to eq true
       end
   
-      it "Al insertar una fila, el valor correspondiente en el tablero deberia cambiar a true" do
+      it "Al insertar una fila, el valor de disponibilidad en el tablero deberia cambiar a false" do
           @tb.insertarFila(0,0)
           expect(@tb.comprobarSiFilaEstaVacia(0,0)).to eq false
       end
   
-      it "Al insertar una columna, el valor correspondiente en el tablero deberia cambiar a true" do
+      it "Al insertar una columna, el valor de disponibilidad en el tablero deberia cambiar a false" do
           @tb.insertarColumna(0,0)
           expect(@tb.comprobarSiColumnaEstaVacia(0,0)).to eq false
       end
@@ -91,9 +91,9 @@ describe Tablero do
       end
   
       it "llenar una fila de arriba para formar una 'caja' proporciona un punto" do
-          expect(@tb.insertarFila(1,0)).to eq 0
           expect(@tb.insertarColumna(0,0)).to eq 0
           expect(@tb.insertarColumna(0,1)).to eq 0
+          expect(@tb.insertarFila(1,0)).to eq 0
           expect(@tb.insertarFila(0,0)).to eq 1
           expect(@tb.verificarSiSeFormaUnaCajaAbajoConFila(0,0)).to eq 1
       end
@@ -143,4 +143,8 @@ describe Tablero do
         expect(@tb.comprobarSiColumnaEstaVacia(0, 1)).to eq false
     end
 
+    it "cuando dibujo una linea en la caja 0 arriba y esta disponible deberia pintarse de un color" do
+        @tb.insertarFilasOColumnas(3, "arriba")
+        expect(@tb.pintarCaja(3)).to eq "border-top-color:red;"
+    end
 end

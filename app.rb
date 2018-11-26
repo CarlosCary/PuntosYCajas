@@ -2,26 +2,40 @@ require 'sinatra'
 require './lib/tablero'
 
 class App < Sinatra::Base
-    $tablero = Tablero.new(4)
+    $tablero
 
     get '/' do
-        erb:bienvenida
+        erb :bienvenida
     end
+
     post '/configuracion' do
-        erb:configuracion
+        erb :configuracion
+    end
+
+    post '/iniciarPartida' do
+        $tablero = Tablero.new(params[:tamTablero].to_i)
+        @filas = $tablero.obtenerFilas
+        @columnas = $tablero.obtenerColumnas
+        @tam = $tablero.obtenerTamanhio
+        @cajaMaxima = (((@tam-1) * (@tam-1) ) -1 ).to_s
+        erb :partida
     end
 
     get '/partida' do 
-        @tam = 4
+        @tam = $tablero.obtenerTamanhio
+        #@tam = 4
+        @cajaMaxima = (((@tam-1) * (@tam-1) ) -1 ).to_s
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
+        @table = $tablero
+        
         erb :partida
     end
 
     get '/partidaJugando' do 
-        @tam = 4
-        @numeroCaja = 1
-        $tablero.insertarFilasOColumnas(0, 'arriba')
+        @tam = $tablero.obtenerTamanhio
+        @numeroCaja = 1100
+        #$tablero.insertarFilasOColumnas(0, 'arriba')
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
         
@@ -29,11 +43,12 @@ class App < Sinatra::Base
     end
 
     post '/partidaJugando1' do
-        @numeroCaja = "1" 
+        @numeroCaja = 1
         $tablero.insertarFilasOColumnas(params[:numeroCaja].to_i, params[:direccionLinea].to_s)
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
         @tam = $tablero.obtenerTamanhio 
+        @table = $tablero
         erb :partida
     end
 

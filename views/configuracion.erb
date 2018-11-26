@@ -15,7 +15,7 @@
 
 <body>
 
-    <form method="get" action="/partida">
+    <form method="post" action="/iniciarPartida">
         <h1>Configuracion</h1>
         <div id="inputs">
             <p>Numero de jugadores</p>
@@ -27,7 +27,7 @@
             <br>
             <br>
             <p>Tamaño del tablero</p>
-            <input class="form-control" type="number" min="4" max="10" id="tamTablero">
+            <input name="tamTablero" class="form-control" type="number" min="4" max="10" id="tamTablero">
         </div>
         <div id="boton">
             <button class="btn btn-info">Iniciar Partida</button>
