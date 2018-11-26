@@ -12,6 +12,9 @@ class Tablero
         @jugadores = Array.new(numJugadores) {Jugador.new}
         @turno = 0     
         @coloresDisponibles = ["red", "blue", "brown", "darkgreen"]
+        @colorFondoCajas = Array.new(((tam-1) * (tam-1) ), "none")
+        @cajaActual
+        @direccionActual
     end
 
     def inicializarJugadores(num)
@@ -68,6 +71,8 @@ class Tablero
         coordX = nil
         coordY = nil
         puntaje = 0
+        @cajaActual = numeroCaja
+        @direccionActual = direccionLinea
         if(direccionLinea == "arriba" || direccionLinea == "abajo")
             arrayCoordenadas = convertirNumeroDeCajaAFilaYDireccionACoordenadasFila(numeroCaja, direccionLinea)
             if(comprobarSiFilaEstaVacia(arrayCoordenadas[0],arrayCoordenadas[1]))
@@ -81,7 +86,6 @@ class Tablero
                 incrementarTurnoYComprobarPuntaje(puntaje)
             end
         end
-        
         return puntaje
     end
 
@@ -154,17 +158,37 @@ class Tablero
         @arregloFilas = false
         puntaje = verificarSiSeFormaUnaCajaAbajoConFila(posX, posY)
         puntaje += verificarSiSeFormaUnaCajaArribaConFila(posX, posY)
+        if(puntaje > 1)
+            if(@direccionActual == "arriba")
+                @colorFondoCajas[@cajaActual] = @jugadores[@turno].color
+                @colorFondoCajas[@cajaActual - (@tamanhio-1)] = @jugadores[@turno].color
+            else
+                @colorFondoCajas[@cajaActual] = @jugadores[@turno].color
+                @colorFondoCajas[@cajaActual + (@tamanhio-1)] = @jugadores[@turno].color
+            end
+        elsif (puntaje == 1)
+            @colorFondoCajas[@cajaActual] = @jugadores[@turno].color
+        end
         return puntaje
     end
 
     def insertarColumna(posX, posY)
-
         @columnas[posX][posY].dibujar(@jugadores[@turno].color)
         @arregloColumnas = false
-        
         puntaje = verificarSiSeFormaUnaCajaDerechaConColumna(posX, posY)
         puntaje += verificarSiSeFormaUnaCajaIzquierdaConColumna(posX, posY)
-        
+        if(puntaje > 1)
+            if(@direccionActual == "derecha")
+                @colorFondoCajas[@cajaActual] = @jugadores[@turno].color
+                @colorFondoCajas[@cajaActual+1] = @jugadores[@turno].color
+            else
+                @colorFondoCajas[@cajaActual] = @jugadores[@turno].color
+                @colorFondoCajas[@cajaActual-1] = @jugadores[@turno].color
+            end
+        elsif (puntaje == 1)
+            @colorFondoCajas[@cajaActual] = @jugadores[@turno].color
+        end
+
         return puntaje
     end
 
@@ -217,13 +241,9 @@ class Tablero
     def verificarSiSeFormaUnaCajaDerechaConColumna(posX, posY)
         puntaje = 0
         if(posY < @tamanhio-1)
-            
             if(@columnas[posX][posY + 1].lineaEstaDibujada())
-                
                 if(@filas[posX][posY].lineaEstaDibujada())
-                   
                     if(@filas[posX + 1][posY].lineaEstaDibujada())
-                        
                         puntaje+=1
                     end
                 end
@@ -281,6 +301,7 @@ class Tablero
             colorCaja += "border-right-color:" + @columnas[cordenadasDerecha[0]][cordenadasDerecha[1]].obtenerColor() + ";"
         end
         
+        colorCaja += "background-color:" + @colorFondoCajas[numeroCaja]
         return colorCaja;
     end
 
