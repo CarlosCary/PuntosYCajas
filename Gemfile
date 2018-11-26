@@ -19,7 +19,6 @@ group :test, :development do
   gem "pry"
   gem "pry-nav"
   gem "simplecov"
-  gem 'selenium-webdriver'
 end
 
 group :development do

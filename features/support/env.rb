@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), '..', '..', 'app.rb')
 require 'capybara'
 require 'capybara/cucumber'
 require 'rspec'
-require 'selenium-webdriver'
+
 Capybara.app = App
 
 class MyWorld
