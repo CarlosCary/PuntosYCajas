@@ -17,7 +17,7 @@
         <% end %>
         <br>
         <div style = "display: inline-block">
-            <h4 class = "nombreJugador" style = <%= @jugadores[$tablero.turno].obtenerColor %> >Es el turno de : <%= @jugadores[$tablero.turno].nombre%></h4>            
+            <h4 class = "turnoJugador" style = <%= @jugadores[$tablero.turno].obtenerColor %> >Es el turno de : <%= @jugadores[$tablero.turno].nombre%></h4>            
         </div>
         <div class="form-group">
             <form action = '/partidaJugando1' method = 'post'>

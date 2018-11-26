@@ -26,3 +26,8 @@ Feature: Tablero
         Given un juego con dos jugadores inicio
         When ingresa el numero de caja "0" y la direccion de linea "arriba"
         Then deberia cambiar de turo
+
+    Scenario: continuar con el turno
+        Given un juego con dos jugadores inicio
+        When ingresa la linea que completa cuadrado en la posicion "0" y la direccion de linea "arriba"
+        Then deberia continuar en el tueno del jugador que hizo el punto

@@ -52,4 +52,12 @@ Then("se deberia pintar el cuadrado con el color del jugador") do
   page.find('#tablero').first(".caja").has_css?('background-color:blue')
 end
 
+Then("deberia cambiar de turo") do
+  page.find('.turnoJugador').has_css?('background-color:blue') 
+end
+
+Then("deberia continuar en el tueno del jugador que hizo el punto") do
+  page.find('.turnoJugador').has_css?('background-color:blue')   
+end
+
 
