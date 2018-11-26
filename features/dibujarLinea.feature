@@ -1,7 +1,7 @@
 Feature: Tablero
     Como jugador
-    Quiero ver el dibujar una linea
-    Para poder jugar y ganar.
+    Quiero dibujar una linea
+    Para poder jugar y aumentar mis posibilidades de ganar.
     
 Scenario: un jugador hace una jugada
         When ingresa el numero de caja "0" y la direccion de linea "arriba"
