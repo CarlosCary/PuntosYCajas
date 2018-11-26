@@ -19,5 +19,10 @@ Feature: Tablero
 
     Scenario: jugador completa un cuadrado
         Given un juego con dos jugadores inicio
-        When ingresa el numero de caja "0" y la direccion de linea "arriba"
+        When ingresa la linea que completa cuadrado en la posicion "0" y la direccion de linea "arriba"
         Then se deberia pintar el cuadrado con el color del jugador
+
+    Scenario: siguiente turno
+        Given un juego con dos jugadores inicio
+        When ingresa el numero de caja "0" y la direccion de linea "arriba"
+        Then deberia cambiar de turo
