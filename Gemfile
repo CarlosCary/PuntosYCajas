@@ -18,7 +18,7 @@ group :test, :development do
   gem "rake"
   gem "pry"
   gem "pry-nav"
-  gem "simplecov"
+  gem "simplecov", :require => false
 end
 
 group :development do

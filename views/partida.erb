@@ -35,16 +35,7 @@
             </form>
         </div>
         <div id = "tablero">
-            <%n = 0%>
-            <%for i in 1..@tam-1 %>
-                    <%for j in 1..@tam-1 %>
-                        <div class = "caja" style = <%= $tablero.pintarCaja(n) %>  >
-                            <p><%= n %> </p>
-                        </div>
-                        <%n += 1%>
-                    <% end %>
-                    <div class = "clean"></div>
-            <% end %>    
+            <%= @htmlTablero %>
         </div>
     </body>
 </html>
