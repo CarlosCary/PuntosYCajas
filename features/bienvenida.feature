@@ -8,6 +8,6 @@ Feature: Bienvenida
         Then deberia ver el mensaje "¡Bienvenido a puntos y cajas!"
 
    Scenario: Boton crear partida
-        Given visito la pagina principal
+        Given estoy en la pagina principal
         When presiono el boton "Crear Partida"
-        Then deberia redirigirme a la pagina para "/configuracion" ingresar mis configuraciones
+        Then deberia redirigirse a la pagina "/configuracion" para ingresar mis configuraciones
