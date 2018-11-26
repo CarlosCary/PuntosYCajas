@@ -1,7 +1,7 @@
 require './lib/linea'
 require './lib/jugador'
 class Tablero
-    attr_accessor :turno
+    attr_accessor :turno, :jugadores
 
     def initialize(tam,numJugadores)
         @tamanhio = tam
@@ -42,7 +42,7 @@ class Tablero
             end
             htmlTablero += limpiar
         end
-        
+
         return htmlTablero
     end
 

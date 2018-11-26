@@ -3,7 +3,7 @@ class Linea
     
     def initialize()
         @dibujado = false
-        @color = "#000000"
+        @color = "black"
     end
 
     def lineaEstaDibujada()

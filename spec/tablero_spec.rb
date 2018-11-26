@@ -165,7 +165,7 @@ describe Tablero do
     end
 
     it "deberia poder cambiar el color de un jugador" do
-        @tb.configurarColorDeJugador(0,"red")
+        @tb.configurarColorDeJugador(0, "red")
         expect(@tb.obtenerColorDeJugador(0)).to eq "red"
     end
 
