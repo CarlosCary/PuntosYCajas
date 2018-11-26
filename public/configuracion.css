@@ -14,3 +14,7 @@ h1{
   #inputs{
     padding: 5em 25em 0 25em;
   }
+
+  body, html {
+    height: 100%;
+  }
