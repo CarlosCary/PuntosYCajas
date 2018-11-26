@@ -15,7 +15,7 @@ describe Tablero do
         @tb.insertarColumna(0,0)
         expect(@tb.comprobarSiColumnaEstaVacia(0,0)).to eq false
     end
-
+ 
     it "arreglo de filas no deberia estar vacio al insertar un elemento" do
         @tb.insertarFila(0,0)
         expect(@tb.arregloFilasEstaVacio()).to eq false
