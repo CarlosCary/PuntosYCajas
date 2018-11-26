@@ -20,6 +20,7 @@ class App < Sinatra::Base
         @columnas = $tablero.obtenerColumnas
         @numJugadores = @jugadores.length
         @tam = $tablero.obtenerTamanhio
+        @htmlTablero = $tablero.crearTablero()
         erb :partida
     end
 
@@ -31,22 +32,24 @@ class App < Sinatra::Base
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
         @table = $tablero
-        
+        @htmlTablero = $tablero.crearTablero()
         erb :partida
     end
 
     get '/partidaJugando' do 
+        
         @tam = 4
         @jugadores=$tablero.obtenerJugadores
         @numJugadores=@jugadores.length
         $tablero.insertarFilasOColumnas(0, 'arriba')
         @filas = $tablero.obtenerFilas
         @columnas = $tablero.obtenerColumnas
-        
+        @htmlTablero = $tablero.crearTablero()
         erb :partida
     end
 
     post '/partidaJugando1' do
+        
         @numeroCaja = 1
         @tam = $tablero.obtenerTamanhio
         @jugadores=$tablero.obtenerJugadores
@@ -56,6 +59,7 @@ class App < Sinatra::Base
         @columnas = $tablero.obtenerColumnas
         @tam = $tablero.obtenerTamanhio 
         @table = $tablero
+        @htmlTablero = $tablero.crearTablero()
         erb :partida
     end
 

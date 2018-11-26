@@ -1,7 +1,8 @@
 require './lib/linea'
 require './lib/jugador'
 class Tablero
-    attr_accessor :turno
+    attr_accessor :turno, :jugadores
+
     def initialize(tam,numJugadores)
         @tamanhio = tam
         @numeroDeJugadores = numJugadores
@@ -22,6 +23,27 @@ class Tablero
             @jugadores[i - 1].nombre = "Jugador " + i.to_s
             @jugadores[i - 1].color = @coloresDisponibles[i - 1]
         end
+    end
+
+    def crearTablero()
+        n = 0
+        htmlTablero = ""
+        limpiar = ""
+        caja = ""
+        limpiar = "<div class = 'clean'></div>"
+
+        for i in 1..@tamanhio-1
+            for j in 1..@tamanhio-1
+                caja = "<div class = 'caja' style = " + $tablero.pintarCaja(n) + ">" + 
+                        "<p>" + n.to_s + "</p>
+                        </div>"
+                n += 1
+                htmlTablero += caja
+            end
+            htmlTablero += limpiar
+        end
+
+        return htmlTablero
     end
 
     def obtenerNombreDeJugador(num)
