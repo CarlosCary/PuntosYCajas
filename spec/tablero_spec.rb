@@ -91,43 +91,40 @@ describe Tablero do
       end
   
       it "llenar una fila de arriba para formar una 'caja' proporciona un punto" do
-          expect(@tb.insertarColumna(0,0)).to eq 0
-          expect(@tb.insertarColumna(0,1)).to eq 0
-          expect(@tb.insertarFila(1,0)).to eq 0
-          expect(@tb.insertarFila(0,0)).to eq 1
+          expect(@tb.insertarFilasOColumnas(0,"izquierda")).to eq 0
+          expect(@tb.insertarFilasOColumnas(0,"abajo")).to eq 0
+          expect(@tb.insertarFilasOColumnas(0,"derecha")).to eq 0
+          expect(@tb.insertarFilasOColumnas(0,"arriba")).to eq 1
           expect(@tb.verificarSiSeFormaUnaCajaAbajoConFila(0,0)).to eq 1
       end
   
       it "llenar una columna de la derecha para formar una 'caja' proporciona un punto" do
-          expect(@tb.insertarFila(0,0)).to eq 0
-          expect(@tb.insertarFila(1,0)).to eq 0
-          expect(@tb.insertarColumna(0,0)).to eq 0
-          expect(@tb.insertarColumna(0,1)).to eq 1
-          expect(@tb.verificarSiSeFormaUnaCajaIzquierdaConColumna(0,1)).to eq 1
+          expect(@tb.insertarFilasOColumnas(0,"arriba")).to eq 0
+          expect(@tb.insertarFilasOColumnas(0,"abajo")).to eq 0
+          expect(@tb.insertarFilasOColumnas(0,"izquierda")).to eq 0
+          expect(@tb.insertarFilasOColumnas(0,"derecha")).to eq 1
       end
   
       it "llenar una fila de abajo para formar una 'caja' proporciona un punto" do
-          expect(@tb.insertarColumna(0,0)).to eq 0
-          expect(@tb.insertarColumna(0,1)).to eq 0
-          expect(@tb.insertarFila(0,0)).to eq 0
-          expect(@tb.insertarFila(1,0)).to eq 1
-          expect(@tb.verificarSiSeFormaUnaCajaArribaConFila(1,0)).to eq 1
+        expect(@tb.insertarFilasOColumnas(0,"arriba")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"derecha")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"izquierda")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"abajo")).to eq 1
       end
 
     it "llenar una columna de la izquierda para formar una 'caja' proporcionan un punto" do
-        expect(@tb.insertarFila(0,0)).to eq 0
-        expect(@tb.insertarFila(1,0)).to eq 0
-        expect(@tb.insertarColumna(0,1)).to eq 0
-        expect(@tb.insertarColumna(0,0)).to eq 1
-        expect(@tb.verificarSiSeFormaUnaCajaDerechaConColumna(0,0)).to eq 1
+        expect(@tb.insertarFilasOColumnas(0,"arriba")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"derecha")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"abajo")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"izquierda")).to eq 1
     end
 
     
     it "llenar una columna de la izquierda para formar una 'caja' proporcionan al jugador cuyo turno " do
-        expect(@tb.insertarFila(0,0)).to eq 0
-        expect(@tb.insertarFila(1,0)).to eq 0
-        expect(@tb.insertarColumna(0,1)).to eq 0
-        expect(@tb.insertarColumna(0,0)).to eq 1
+        expect(@tb.insertarFilasOColumnas(0,"arriba")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"derecha")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"abajo")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"izquierda")).to eq 1
         expect(@tb.verificarSiSeFormaUnaCajaDerechaConColumna(0,0)).to eq 1
     end
 
@@ -154,7 +151,7 @@ describe Tablero do
     it "cuando dibujo una linea en la caja 3 arriba y esta disponible deberia pintarse de un color" do
         @tb.inicializarJugadores(2)
         @tb.insertarFilasOColumnas(3, "arriba")
-        expect(@tb.pintarCaja(3)).to eq "border-top-color:red;"
+        expect(@tb.pintarCaja(3)).to eq "border-top-color:red;background-color:none"
     end
 
     it "los jugadores no deberian tener nombre inicialmente" do
@@ -199,13 +196,13 @@ describe Tablero do
     end
 
     it "cuando un jugador dibuja una linea que completa dos cajas se le asigna dos puntos " do
-        expect(@tb.insertarFila(0,0)).to eq 0
-        expect(@tb.insertarFila(1,0)).to eq 0
-        expect(@tb.insertarColumna(0,0)).to eq 0
-        expect(@tb.insertarColumna(0,2)).to eq 0
-        expect(@tb.insertarFila(1,1)).to eq 0
-        expect(@tb.insertarFila(0,1)).to eq 0
-        expect(@tb.insertarColumna(0,1)).to eq 2
+        expect(@tb.insertarFilasOColumnas(0,"arriba")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"izquierda")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"abajo")).to eq 0
+        expect(@tb.insertarFilasOColumnas(1,"arriba")).to eq 0
+        expect(@tb.insertarFilasOColumnas(1,"derecha")).to eq 0
+        expect(@tb.insertarFilasOColumnas(1,"abajo")).to eq 0
+        expect(@tb.insertarFilasOColumnas(0,"derecha")).to eq 2
     end
 
 end
