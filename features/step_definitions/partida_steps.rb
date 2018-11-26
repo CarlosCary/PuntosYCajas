@@ -48,4 +48,8 @@ Then("se deberia dibujar un {string} debajo de su nombre") do |puntaje|
   find_all('.puntaje').to_a.last.value() == puntaje
 end
 
+Then("se deberia pintar el cuadrado con el color del jugador") do
+  page.find('#tablero').first(".caja").has_css?('background-color:blue')
+end
+
 

@@ -16,3 +16,8 @@ Feature: Tablero
         Given un juego con dos jugadores inicio
         When ingresa la linea que completa cuadrado en la posicion "0" y la direccion de linea "arriba"
         Then se deberia dibujar un "1" debajo de su nombre
+
+    Scenario: jugador completa un cuadrado
+        Given un juego con dos jugadores inicio
+        When ingresa el numero de caja "0" y la direccion de linea "arriba"
+        Then se deberia pintar el cuadrado con el color del jugador
